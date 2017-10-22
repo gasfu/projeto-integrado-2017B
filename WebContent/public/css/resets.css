@@ -1,0 +1,24 @@
+* {
+	box-sizing: border-box;
+	--pink-color: #FC6B7A;
+	--pink-secondary-color: #CA5662;
+	--blue-color: #22607E;
+	--gray-color: #7E7E7E;
+	--light-gray-color: #CACACA;
+}
+
+html, body, section, div, main, nav, header, footer, a, p, h1, h2, h3, h4, h5, table, 
+thead, tbody, tr, td, th, ul, li, ol, input, input:focus, select, select:focus, textarea,
+button, span, label, form, fieldset {
+	outline: none;
+	text-decoration: none;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border: 0;
+} 
+
+html, body {
+	font-size: 16px;
+	font-family: 'Open Sans', sans-serif;
+}

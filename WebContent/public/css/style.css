@@ -1,0 +1,353 @@
+/* ===== HEADER ===== */
+.header-page {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	height: 65px;
+	padding: 15px 60px;
+	margin-left: auto;
+	margin-right: auto;
+	position: absolute;
+	top: 0;
+}
+
+.header-page > .brand {
+	height: 100%;
+}
+
+.header-page > .navigation > .link {
+	color: var(--gray-color);
+	transition-duration: .4s;
+}
+
+.header-page > .navigation > .link + .link {
+	margin-left: 30px;
+}
+
+.header-page > .navigation > .link.-active,
+.header-page > .navigation > .link:hover {
+	color: var(--pink-color);
+}
+
+/* ===== AUTHENTICATE ===== */
+
+.authenticate {
+	display: flex;
+	width: 100%;
+	height: 100vh;
+}
+
+.authenticate > .form {
+	width: 100%;
+	max-width: 450px;
+	margin: auto;
+}
+
+.authenticate > .form > .title {
+	color: var(--pink-color);
+	font-family: 'Oleo Script Swash Caps', cursive;
+	font-size: 3.5em;
+	line-height: 1em;
+	margin-bottom: 10px;
+}
+
+.authenticate > .form > .subtitle {
+	font-size: 1.1em;
+	margin-bottom: 45px;
+	color: var(--gray-color);
+}
+
+.authenticate > .form > .input {
+	width: 100%;
+	height: 45px;
+	padding: 12px 8px;
+	border-bottom: solid 1px var(--light-gray-color);
+	border-radius: 4px; 
+	margin-bottom: 15px;
+	transition-duration: .4s;
+}
+
+.authenticate > .form > .input:focus {
+	border-color: var(--pink-color);
+	border-width: 2px;
+}
+
+.authenticate > .form > .input::placeholder {
+	color: var(--gray-color);
+}
+
+.authenticate > .form > .action {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 55px;
+}
+
+.authenticate > .form > .action > .forgot {
+	color: var(--gray-color);
+	font-size: .8em
+}
+
+.authenticate > .form > .action > .button {
+	width: 150px;
+	height: 45px;
+	color: white;
+	text-transform: uppercase;
+	background-color: var(--pink-color);
+	border-radius: 45px;
+	cursor: pointer;
+	transition-duration: .4s;
+}
+
+.authenticate > .form > .action > .button:hover {
+	background-color: var(--pink-secondary-color);
+}
+
+/* ===== SIGNUP ===== */
+
+.signup {
+	display: flex;
+	width: 100%;
+	height: 100vh;
+}
+
+.teste {
+	display: flex;
+	width: 100%;
+	height: 100vh;
+	align-items: center;
+}
+
+.signup > .form {
+	width: 100%;
+	max-width: 450px;
+	margin: auto;
+}
+
+.signup > .form > .title {
+	color: var(--pink-color);
+	font-family: 'Oleo Script Swash Caps', cursive;
+	font-size: 3.5em;
+	line-height: 1em;
+	margin-bottom: 10px;
+}
+
+.signup > .form > .subtitle {
+	font-size: 1.1em;
+	margin-bottom: 45px;
+	color: var(--gray-color);
+}
+
+.signup > .form > .input {
+	width: 100%;
+	height: 45px;
+	padding: 12px 8px;
+	border-bottom: solid 1px var(--light-gray-color);
+	border-radius: 4px; 
+	margin-bottom: 15px;
+	transition-duration: .4s;
+}
+
+.signup > .form > .input:focus {
+	border-color: var(--pink-color);
+	border-width: 2px;
+}
+
+.signup > .form > .input::placeholder {
+	color: var(--gray-color);
+}
+
+.signup > .form > .input.-x50 {
+	width: calc(50% - 10px);
+}
+
+.signup > .form > .input.-x50 + .input.-x50 {
+	margin-left: 15px;
+}
+
+.signup > .form > .action {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+
+.signup > .form > .action > .eula {
+	color: var(--gray-color);
+	font-size: .8em;
+	max-width: 260px;
+	text-align: right;
+}
+
+.signup > .form > .action > .eula > .link {
+	color: var(--pink-secondary-color);
+}
+
+.signup > .form > .action > .button {
+	width: 150px;
+	height: 45px;
+	color: white;
+	text-transform: uppercase;
+	background-color: var(--pink-color);
+	border-radius: 45px;
+	cursor: pointer;
+	transition-duration: .4s;
+}
+
+.signup > .form > .action > .button:hover {
+	background-color: var(--pink-secondary-color);
+}
+
+/* ===== visibility ===== */
+
+.visibility {
+	width: 100%;
+	padding: 60px 0; 
+	max-width: 1024px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 65px;
+	min-height: calc(100vh - 65px);
+}
+
+.visibility > .search {
+	width: 100%;
+	height: 60px;
+	padding-left: 5px;
+	padding-right: 5px;
+	border: solid 1px var(--light-gray-color);	
+	display: inline-flex;
+}
+
+.visibility > .search > .input {
+	width: calc(100% - 60px);
+	height: 100%;
+	padding: 12px 15px; 
+	display: inline-block;
+	font-size: 1.2em;
+}
+
+.visibility > .search > .button {
+	width: 60px;
+	height: 100%;
+	display: inline-block;
+	background-color: transparent;
+}
+
+.visibility > .search > .button > .icon {
+	height: 100%;
+	padding: 8px;
+}
+
+.visibility > .list {
+	padding-top: 60px;
+	padding-bottom: 60px;
+	display: inline-flex;
+	width: 100%;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.location-card {
+	width: 320px;
+	box-shadow: 0px 0px 10px 0px rgba(0,0,0,.2);
+	border: solid 1px var(--light-gray-color);
+	display: inline-block;
+	margin-bottom: 30px;
+	cursor: pointer;
+}
+/*
+.location-card + .location-card {
+	margin-left: 15px;
+}*/
+
+.location-card > .image {
+	background-color: var(--blue-color);
+	width: 100%;
+	height: 200px;
+}
+
+.location-card > .description {
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.location-card > .description > .title {
+	text-transform: uppercase;
+	font-size: 1.2em;
+	margin-bottom: 5px; 
+}
+
+.location-card > .description > .city {
+	font-size: 1em;
+	font-weight: 300;
+	color: var(--gray-color); 
+	margin-bottom: 15px; 
+}
+
+/* ===== STARS ===== */
+
+.stars {
+	text-align: center;
+	display: inline-flex;
+}
+
+.stars > .star {
+	position: relative;
+	width: 25px;
+	height: 25px;
+	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+	display: inline-block;
+}
+
+.stars > .star::after {
+		content: "";
+		background: white;
+		position: absolute;	
+}
+
+.stars > .star._0::after {
+	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.stars > .star._1::after,
+.stars > .star._2::after {
+	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 20% 48%, 20% 35%, 39% 35%);
+}
+
+.stars > .star._3,
+.stars > .star._4 {
+	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 40% 77%, 40% 33%);
+}
+			
+.stars > .star._5::after {
+	clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%);
+}
+
+.stars > .star._6::after,
+.stars > .star._7::after {
+	clip-path: polygon(61% 35%, 98% 35%, 68% 57%, 79% 91%, 61% 77.5%);
+}
+			
+.stars > .star._8::after,
+.stars > .star._9::after {
+	clip-path: polygon(80% 35%, 98% 35%, 80% 48%);
+}
+		
+.stars > .star._10::after {
+	background: var(--blue-color);
+}
+
+.stars > .interior {
+	background-color: var(--blue-color);
+}
+
+.stars > .interior::after {
+	top: 2px;
+	left: 2px;
+	right: 2px;
+	bottom: 2px;	
+}

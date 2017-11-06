@@ -9,22 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("")
-public class LoginController extends HttpServlet {
+@WebServlet("/visualizar")
+public class VisualizarController extends HttpServlet {
 	
-	public LoginController() {
+	public VisualizarController() {
 		super();
 	}
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("login.jsp").forward(request, response);
+		request.getRequestDispatcher("visualizar.jsp").forward(request, response);
 	}
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	
-	}
-	
 }

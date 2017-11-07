@@ -15,11 +15,12 @@
 <main class="signup">
 	<form class="form" app-register-action>
 		<h1 class="title">Acesse</h1>
-		<h2 class="subtitle">Cadastre-se.</h2>	
+		<h2 class="subtitle">Cadastre-se.</h2>
+		<div class="alert-wrapper" alert-wrapper></div>	
 		<input class="input" type="text" placeholder="nome" name="NAME" />
 		<input class="input" type="text" placeholder="email" name="EMAIL" />
 		<input class="input -x50" type="password" placeholder="password" name="PASSWORD"/>
-		<input class="input -x50" type="password" placeholder="confirme seu password" />
+		<input class="input -x50" type="password" placeholder="confirme seu password" name="CONFIRM_PASSWORD" />
 		<div class="action">
 			<button class="button -default">Cadastrar</button>
 			<p class="eula">

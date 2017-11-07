@@ -121,7 +121,7 @@
 
 .signup > .form {
 	width: 100%;
-	max-width: 450px;
+	max-width: 550px;
 	margin: auto;
 }
 
@@ -137,6 +137,10 @@
 	font-size: 1.1em;
 	margin-bottom: 45px;
 	color: var(--gray-color);
+}
+
+.signup .alert {
+	margin-bottom: 30px;
 }
 
 .signup > .form > .input {
@@ -350,4 +354,13 @@
 	left: 2px;
 	right: 2px;
 	bottom: 2px;	
+}
+
+.alert {
+	padding: 15px 30px;
+	background-color: var(--pink-color);
+	color: white;
+	font-size: .9em;
+	line-height: 1.6em;
+	border-radius: 6px;
 }

@@ -3,18 +3,49 @@ formRegister.onsubmit = registerAction;
 
 function registerAction(e) {
 	e.preventDefault();
+	destroyErrors();
+	const errors = [];
 	
 	const name = e.target.NAME.value;
 	const email = e.target.EMAIL.value;
 	const password = e.target.PASSWORD.value;
+	const confirmPassword = e.target.CONFIRM_PASSWORD.value;
+	
+	if(!name.trim()) errors.push("Erro! Por favor preencha o campo nome.");
+	
+	if(!email.trim()) errors.push("Erro! Por favor preencha o campo email.");
+	
+	if(!password) errors.push("Erro! Por favor preencha o campo senha.");
+	else if(password != confirmPassword) errors.push("Erro! Senhas não condizem.");
+	
+	if(!confirmPassword) errors.push("Erro! Por favor preencha o campo confirme sua senha.");
+		
+	if(errors.length) return createErrors(errors);
 	
 	const data = { name, email, password };
 	
-	console.log(mapToApi(data));
+	if(name.trim()) 
 	
 	axios.post("/acesse/cadastrar", mapToApi(data)).then((response) => {
-		console.log(response);
+		if(response.data.status == 200) document.location.href = "/acesse/visualizar";
 	});
+}
+
+function createErrors(errors) {
+	let html = '<div class="alert -wrong">';
+	errors.forEach(error => {
+		html += `<div class="error">${error}</div>`;
+	});
+	html += '</div>';
+	
+	const alert = document.querySelector("[alert-wrapper]");
+	console.log("alert", html);
+	alert.innerHTML = html;
+}
+
+function destroyErrors() {
+	const alert = document.querySelector("[alert-wrapper]");
+	alert.innerHTML = "";
 }
 
 function mapToApi(data) {

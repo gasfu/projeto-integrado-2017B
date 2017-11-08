@@ -4,6 +4,9 @@ if(formRegister) formRegister.onsubmit = registerAction;
 const formAuthorize = document.querySelector("[app-authorize-action]");
 if(formAuthorize) formAuthorize.onsubmit = authorizeAction;
 
+const formRegisterLocal = document.querySelector("[app-register-local-action]");
+if(formRegisterLocal) formRegisterLocal.onsubmit = registerLocalAction;
+
 function authorizeAction(e) {
 	e.preventDefault();
 	
@@ -13,8 +16,9 @@ function authorizeAction(e) {
 	const data = { email, password };
 	
 	axios.post("/acesse/authorize", mapToApi(data)).then((response) => {
+		e.target.classList.remove("-error");
 		if(response.data.status == 200) document.location.href = "/acesse/visualizar";
-		console.log(response);
+		else e.target.classList.add("-error");
 	});
 }
 
@@ -46,6 +50,32 @@ function registerAction(e) {
 	});
 }
 
+
+function registerLocalAction(e) {
+	e.preventDefault();
+	destroyErrors();
+	const errors = [];
+	
+	const name = e.target.NAME.value;
+	const address = e.target.ADDRESS.value;
+	const description = e.target.DESCRIPTION.value;
+	
+	if(!name.trim()) errors.push("Erro! Por favor preencha o campo nome.");
+	
+	if(!address.trim()) errors.push("Erro! Por favor preencha o campo endereço.");
+	
+	if(!description.trim()) errors.push("Erro! Por favor preencha o campo descrição.");
+	
+	if(errors.length) return createErrors(errors);
+	
+	const data = { name, address, description};
+	
+	axios.post("/acesse/local", mapToApi(data)).then((response) => {
+		if(response.data.status == 200) createSucess("Local cadastrado com sucesso :)");
+	});
+}
+
+
 function createErrors(errors) {
 	let html = '<div class="alert -wrong">';
 	errors.forEach(error => {
@@ -54,7 +84,15 @@ function createErrors(errors) {
 	html += '</div>';
 	
 	const alert = document.querySelector("[alert-wrapper]");
-	console.log("alert", html);
+	alert.innerHTML = html;
+}
+
+function createSucess(message) {
+	let html = '<div class="alert -success">';
+	html += `<div class="message">${message}</div>`;
+	html += '</div>';
+	
+	const alert = document.querySelector("[alert-wrapper]");
 	alert.innerHTML = html;
 }
 

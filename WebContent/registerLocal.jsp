@@ -5,27 +5,19 @@
 	<c:param name="title" value="Cadastre um Local"/>
 </c:import>
 
-<header class="header-page">
-	<img class="brand" src="/acesse/public/images/brand.svg">
-	<nav class="navigation">
-		<a class="link" href="/acesse">entrar</a>
-	</nav>
-</header>
+<c:import url="templates/header.jsp">
+	<c:param name="active" value="registerLocal"/>
+</c:import>
 
-<main class="registerLocal">
-	<form class="form" app-register-action>
-		<h1 class="title">Acesse</h1>
+<main class="register-local">
+	<form class="form" app-register-local-action>
 		<h2 class="subtitle">Cadastre um Local</h2>
 		<div class="alert-wrapper" alert-wrapper></div>	
-		<input class="input" type="text" placeholder="nome" name="NOME DO LOCAL" />
-		<input class="input" type="text" placeholder="endereço" name="ENDEREÇO" />
-		<input class="input" type="text" placeholder="descrição" name="DESCRIÇÃO" />
+		<input class="input" type="text" placeholder="nome" name="NAME" />
+		<input class="input" type="text" placeholder="endereço" name="ADDRESS" />
+		<input class="input" type="text" placeholder="descrição" name="DESCRIPTION" />
 		<div class="action">
 			<button class="button -default">Cadastrar</button>
-			<p class="eula">
-				Ao cadastrar você concorda com os nossos <a class="link" href="#">
-				Termos de Uso</a> e de <a class="link" href="#">Privacidade.</a>
-			</p>
 		</div>
 	</form>
 </main>

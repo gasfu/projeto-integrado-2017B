@@ -46,6 +46,11 @@
 	margin: auto;
 }
 
+.authenticate > .form.-error {
+	animation: error .1s;
+	animation-iteration-count: 4;
+}
+
 .authenticate > .form > .title {
 	color: var(--pink-color);
 	font-family: 'Oleo Script Swash Caps', cursive;
@@ -365,11 +370,12 @@
 	font-size: .9em;
 	line-height: 1.6em;
 	border-radius: 6px;
+	text-align: left;
 }
 
 
 /* ===== REGISTER LOCAL ===== */
-.registerLocal > .form > .input {
+.register-local > .form > .input {
 	width: 100%;
 	height: 50px;
 	padding: 12px 8px;
@@ -379,19 +385,20 @@
 	transition-duration: .4s;
 }
 
-.registerLocal {
+.register-local {
 	display: flex;
 	width: 100%;
 	height: 100vh;
 }
 
-.registerLocal > .form {
+.register-local > .form {
 	width: 100%;
-	max-width: 550px;
+	max-width: 400px;
 	margin: auto;
+	text-align: center;
 }
 
-.registerLocal > .form > .title {
+.register-local > .form > .title {
 	color: var(--pink-color);
 	font-family: 'Oleo Script Swash Caps', cursive;
 	font-size: 3.5em;
@@ -399,17 +406,17 @@
 	margin-bottom: 10px;
 }
 
-.registerLocal > .form > .subtitle {
-	font-size: 1.1em;
+.register-local > .form > .subtitle {
+	font-size: 1.8em;
 	margin-bottom: 45px;
 	color: var(--gray-color);
 }
 
-.registerLocal .alert {
+.register-local .alert {
 	margin-bottom: 30px;
 }
 
-.registerLocal > .form > .input {
+.register-local > .form > .input {
 	width: 100%;
 	height: 45px;
 	padding: 12px 8px;
@@ -419,42 +426,42 @@
 	transition-duration: .4s;
 }
 
-.registerLocal > .form > .input:focus {
+.register-local > .form > .input:focus {
 	border-color: var(--pink-color);
 	border-width: 2px;
 }
 
-.registerLocal > .form > .input::placeholder {
+.register-local > .form > .input::placeholder {
 	color: var(--gray-color);
 }
 
-.registerLocal > .form > .input.-x50 {
+.register-local > .form > .input.-x50 {
 	width: calc(50% - 10px);
 }
 
-.registerLocal > .form > .input.-x50 + .input.-x50 {
+.register-local > .form > .input.-x50 + .input.-x50 {
 	margin-left: 15px;
 }
 
-.registerLocal > .form > .action {
+.register-local > .form > .action {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: center;
 	margin-top: 30px;
 }
 
-.registerLocal > .form > .action > .eula {
+.register-local > .form > .action > .eula {
 	color: var(--gray-color);
 	font-size: .8em;
 	max-width: 260px;
 	text-align: right;
 }
 
-.registerLocal > .form > .action > .eula > .link {
+.register-local > .form > .action > .eula > .link {
 	color: var(--pink-secondary-color);
 }
 
-.registerLocal > .form > .action > .button {
+.register-local > .form > .action > .button {
 	width: 150px;
 	height: 45px;
 	color: white;
@@ -465,6 +472,22 @@
 	transition-duration: .4s;
 }
 
-.registerLocal > .form > .action > .button:hover {
+.register-local > .form > .action > .button:hover {
 	background-color: var(--pink-secondary-color);
 }	
+
+
+@keyframes error {
+	25% {
+		transform: rotate(-1deg);
+	}
+		
+	75% {
+		transform: rotate(1deg);
+	}
+		
+	100% {
+		transform: rotate(0deg);
+	}
+}
+	

@@ -5,8 +5,9 @@
 	<c:param name="title" value="Encontre locais - Acesse"/>
 </c:import>
 
-
-<c:import url="templates/header.jsp"/>
+<c:import url="templates/header.jsp">
+	<c:param name="active" value="show" />
+</c:import>
 
 <main class="visibility">
 	<div class="search">

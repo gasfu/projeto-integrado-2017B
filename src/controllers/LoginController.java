@@ -32,6 +32,7 @@ public class LoginController extends HttpServlet {
 		
 		UsersService service = new UsersService();
 		
+		HttpSession session = request.getSession(); 		
 		
 		User user = null;
 		
@@ -43,8 +44,10 @@ public class LoginController extends HttpServlet {
 				
 		if(user == null)
 			data.put("status", 600);
-		else
+		else {
 			data.put("status", 200);
+			session.setAttribute("auth", user);
+		}
 
 		response.setContentType("application/json");
         response.getWriter().write(data.toString());

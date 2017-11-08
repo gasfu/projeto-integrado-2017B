@@ -73,7 +73,6 @@ public class User {
 			string += characters.charAt(random);
 		}
 		
-		System.out.println(string);
 		return string;
 	}
 	

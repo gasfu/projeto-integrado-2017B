@@ -38,6 +38,8 @@
 	height: 100vh;
 }
 
+
+
 .authenticate > .form {
 	width: 100%;
 	max-width: 450px;
@@ -364,3 +366,105 @@
 	line-height: 1.6em;
 	border-radius: 6px;
 }
+
+
+/* ===== REGISTER LOCAL ===== */
+.registerLocal > .form > .input {
+	width: 100%;
+	height: 50px;
+	padding: 12px 8px;
+	border-bottom: solid 1px var(--light-gray-color);
+	border-radius: 4px; 
+	margin-bottom: 15px;
+	transition-duration: .4s;
+}
+
+.registerLocal {
+	display: flex;
+	width: 100%;
+	height: 100vh;
+}
+
+.registerLocal > .form {
+	width: 100%;
+	max-width: 550px;
+	margin: auto;
+}
+
+.registerLocal > .form > .title {
+	color: var(--pink-color);
+	font-family: 'Oleo Script Swash Caps', cursive;
+	font-size: 3.5em;
+	line-height: 1em;
+	margin-bottom: 10px;
+}
+
+.registerLocal > .form > .subtitle {
+	font-size: 1.1em;
+	margin-bottom: 45px;
+	color: var(--gray-color);
+}
+
+.registerLocal .alert {
+	margin-bottom: 30px;
+}
+
+.registerLocal > .form > .input {
+	width: 100%;
+	height: 45px;
+	padding: 12px 8px;
+	border-bottom: solid 1px var(--light-gray-color);
+	border-radius: 4px; 
+	margin-bottom: 15px;
+	transition-duration: .4s;
+}
+
+.registerLocal > .form > .input:focus {
+	border-color: var(--pink-color);
+	border-width: 2px;
+}
+
+.registerLocal > .form > .input::placeholder {
+	color: var(--gray-color);
+}
+
+.registerLocal > .form > .input.-x50 {
+	width: calc(50% - 10px);
+}
+
+.registerLocal > .form > .input.-x50 + .input.-x50 {
+	margin-left: 15px;
+}
+
+.registerLocal > .form > .action {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+
+.registerLocal > .form > .action > .eula {
+	color: var(--gray-color);
+	font-size: .8em;
+	max-width: 260px;
+	text-align: right;
+}
+
+.registerLocal > .form > .action > .eula > .link {
+	color: var(--pink-secondary-color);
+}
+
+.registerLocal > .form > .action > .button {
+	width: 150px;
+	height: 45px;
+	color: white;
+	text-transform: uppercase;
+	background-color: var(--pink-color);
+	border-radius: 45px;
+	cursor: pointer;
+	transition-duration: .4s;
+}
+
+.registerLocal > .form > .action > .button:hover {
+	background-color: var(--pink-secondary-color);
+}	

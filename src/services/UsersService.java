@@ -10,4 +10,14 @@ public class UsersService {
 		return repository.create(user);
 	}
 	
+	public User findOneByEmail(String email) {
+		UsersRepository repository = new UsersRepository();
+		return repository.findOneByEmail(email);
+	}
+	
+	public User authorize(String email, String password) {
+		UsersRepository repository = new UsersRepository();
+		return repository.authorize(email, password);
+	}
+	
 }

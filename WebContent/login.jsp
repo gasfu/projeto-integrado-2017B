@@ -13,11 +13,11 @@
 </header>
 
 <main class="authenticate">
-	<form class="form" action="/visualizar.html">
+	<form class="form" app-authorize-action >
 		<h1 class="title">Acesse</h1>
 		<h2 class="subtitle">Faça parte dessa comunidade, e torne o mundo mais acessivel.</h2>
-		<input class="input" type="text" placeholder="email" />
-		<input class="input" type="password" placeholder="password" />
+		<input class="input" type="text" placeholder="email" name="EMAIL" />
+		<input class="input" type="password" placeholder="password" name="PASSWORD" />
 		<div class="action">
 			<button class="button -default">Entrar</button>
 			<a class="forgot" >Esqueceu a senha?</a>

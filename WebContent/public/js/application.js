@@ -1,5 +1,22 @@
 const formRegister = document.querySelector("[app-register-action]");
-formRegister.onsubmit = registerAction;
+if(formRegister) formRegister.onsubmit = registerAction;
+
+const formAuthorize = document.querySelector("[app-authorize-action]");
+if(formAuthorize) formAuthorize.onsubmit = authorizeAction;
+
+function authorizeAction(e) {
+	e.preventDefault();
+	
+	const email = e.target.EMAIL.value;
+	const password = e.target.PASSWORD.value;
+
+	const data = { email, password };
+	
+	axios.post("/acesse/authorize", mapToApi(data)).then((response) => {
+		if(response.data.status == 200) document.location.href = "/acesse/visualizar";
+		console.log(response);
+	});
+}
 
 function registerAction(e) {
 	e.preventDefault();
@@ -23,8 +40,6 @@ function registerAction(e) {
 	if(errors.length) return createErrors(errors);
 	
 	const data = { name, email, password };
-	
-	if(name.trim()) 
 	
 	axios.post("/acesse/cadastrar", mapToApi(data)).then((response) => {
 		if(response.data.status == 200) document.location.href = "/acesse/visualizar";

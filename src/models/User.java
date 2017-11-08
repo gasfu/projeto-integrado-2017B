@@ -16,7 +16,13 @@ public class User {
 		this.setId(this.generateId());
 		this.setName(name);
 		this.setEmail(email);
-		this.setPassword(password);
+		try {
+			this.setPassword(hash(password));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public User(String id, String name, String email, String password) {
@@ -50,11 +56,8 @@ public class User {
 		this.email = email;
 	}
 
-	public String getPassword() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
-		algorithm.update(password.getBytes("UTF-8"));
-		String hash = new BigInteger(1, algorithm.digest()).toString(16);
-        return hash;
+	public String getPassword() {
+		return password;
 	}
 
 	public void setPassword(String password) {
@@ -72,6 +75,13 @@ public class User {
 		
 		System.out.println(string);
 		return string;
+	}
+	
+	public static String hash(String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
+		algorithm.update(password.getBytes("UTF-8"));
+		String hash = new BigInteger(1, algorithm.digest()).toString(16);
+        return hash;
 	}
 
 }

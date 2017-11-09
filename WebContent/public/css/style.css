@@ -257,16 +257,18 @@
 	display: inline-flex;
 	width: 100%;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 .location-card {
-	width: 320px;
+	width: 310px;
 	box-shadow: 0px 0px 10px 0px rgba(0,0,0,.2);
 	border: solid 1px var(--light-gray-color);
 	display: inline-block;
 	margin-bottom: 30px;
 	cursor: pointer;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 /*
 .location-card + .location-card {

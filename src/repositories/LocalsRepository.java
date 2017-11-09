@@ -63,4 +63,35 @@ public class LocalsRepository {
 		return locals;
 	}
 	
+	public ArrayList<Local> search(String name) {
+		String query = "SELECT * FROM locals WHERE name LIKE ?";
+		ArrayList<Local> locals = new ArrayList<Local>();
+		
+		try{
+			Connection connection = ConnectionFactory.getConnection();
+			PreparedStatement stmt;
+			
+			stmt = connection.prepareStatement(query);
+			stmt.setString(1, name + "%");
+			ResultSet result = stmt.executeQuery();
+			
+			while(result.next()) {
+				Local local = new Local();
+				local.setId(result.getString(1));
+				local.setName(result.getString(3));
+				local.setAddress(result.getString(4));
+				local.setDescription(result.getString(5));
+				local.setCreateAt(result.getString(6));
+				
+				locals.add(local);
+			}
+				
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return locals;
+	}
+	
 }

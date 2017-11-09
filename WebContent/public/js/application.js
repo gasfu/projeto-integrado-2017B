@@ -7,6 +7,9 @@ if(formAuthorize) formAuthorize.onsubmit = authorizeAction;
 const formRegisterLocal = document.querySelector("[app-register-local-action]");
 if(formRegisterLocal) formRegisterLocal.onsubmit = registerLocalAction;
 
+const searchInput = document.querySelector("[search-locals-input]");
+if(searchInput) searchInput.onkeyup = searchAction;
+
 function authorizeAction(e) {
 	e.preventDefault();
 	
@@ -70,7 +73,7 @@ function registerLocalAction(e) {
 	
 	const data = { name, address, description};
 	
-	axios.post("/acesse/local", mapToApi(data)).then((response) => {
+	axios.post("/acesse/locals", mapToApi(data)).then((response) => {
 		if(response.data.status == 200) createSucess("Local cadastrado com sucesso :)");
 	});
 }
@@ -112,3 +115,51 @@ function mapToApi(data) {
 	
 	return map;
 } 
+
+function initialSearch() {
+	axios.get("/acesse/locals").then((response) => {
+		console.log("response", response);
+		let html;
+		
+		if(!response.data.locals.length) html = "Nenhum local cadastrado :(";
+		else html = response.data.locals.map(local => parseLocals({ name: local.name, address: local.address })).join();
+		
+		document.querySelector("[app-local-list]").innerHTML = html;
+	});
+};
+
+initialSearch();
+
+function parseLocals({ name, address }) {
+	let html = "";
+	
+	html += '<div class="location-card">';
+		html +=	'<img class="image" />';
+		html += '<div class="description">';
+			html += `<h3 class="title">${name}</h3>`;
+			html += `<h3 class="city">${address}</h3>`;
+			html += '<div class="stars">';
+				html += '<span class="star interior _10"></span>';
+				html += '<span class="star interior _10"></span>';
+				html += '<span class="star interior _10"></span>';
+				html += '<span class="star interior _7"></span>';
+				html += '<span class="star interior _0"></span>';
+			html += '</div>';
+		html += '</div>';
+	html += '</div>';
+	
+	return html;
+}
+
+function searchAction(e) {
+	if(!e.target.value) initialSearch();
+	axios.get(`/acesse/search?name=${e.target.value}`).then((response) => {
+		
+		let html;
+		
+		if(!response.data.locals.length) html = "Nenhum local cadastrado :(";
+		else html = response.data.locals.map(local => parseLocals({ name: local.name, address: local.address })).join();
+		
+		document.querySelector("[app-local-list]").innerHTML = html;
+	});
+}

@@ -9,7 +9,7 @@
 
 html, body, section, div, main, nav, header, footer, a, p, h1, h2, h3, h4, h5, table, 
 thead, tbody, tr, td, th, ul, li, ol, input, input:focus, select, select:focus, textarea,
-button, span, label, form, fieldset {
+button, span, label, form, fieldset, figure {
 	outline: none;
 	text-decoration: none;
 	list-style: none;

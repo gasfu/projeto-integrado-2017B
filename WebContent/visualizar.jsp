@@ -14,8 +14,8 @@
 		<input class="input" type="text" placeholder="Encontre lugares para avaliar" search-locals-input />
 		<button class="button"><img class="icon" src="/acesse/public/icons/search.svg"></button>
 	</div>
-	<div class="list" app-local-list>	
-	</div>
+	<div class="list" app-local-list></div>
 </main>
 
+<c:import url="templates/modal.jsp"/>
 <c:import url="templates/footer.jsp"/>

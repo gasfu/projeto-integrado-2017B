@@ -12,6 +12,11 @@ public class LocalsService {
 		return repository.create(local);
 	}
 	
+	public Local getOne(String id) {
+		LocalsRepository repository = new LocalsRepository();
+		return repository.getLocalById(id);
+	}
+	
 	public ArrayList<Local> fetch() {
 		LocalsRepository repository = new LocalsRepository();
 		return repository.fetch();

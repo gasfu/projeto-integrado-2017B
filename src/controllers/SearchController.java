@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import models.Evaluation;
 import models.Local;
+import services.EvaluationService;
 import services.LocalsService;
 
 @WebServlet("/search")
@@ -36,17 +38,36 @@ public class SearchController extends HttpServlet {
 		JSONArray array = new JSONArray();
 		
 		while(list.hasNext()) {
-			JSONObject user = new JSONObject();
+			JSONObject local = new JSONObject();
 			
 			Local object = list.next();
-			System.out.println(object.getDescription());
 			
-			user.put("name", object.getName());
-			user.put("address", object.getAddress());
-			user.put("description", object.getDescription());
-			user.put("creatAt", object.getCreateAt());
+			EvaluationService evaluationsService = new EvaluationService();
+			ArrayList<Evaluation> evaluations = evaluationsService.getByLocalId(object.getId());
 			
-			array.add(user);
+			Iterator<Evaluation> evaluationsList = evaluations.iterator();
+			
+			double average = 0;
+			int count = 0;
+			
+			while(evaluationsList.hasNext()) {
+				average += Double.parseDouble(evaluationsList.next().getValue());
+				count++;
+			}
+			
+			if(count > 0) average = average / count;
+			
+			local.put("name", object.getName());
+			local.put("id", object.getId());
+			local.put("lat", object.getLat());
+			local.put("lng", object.getLng());
+			local.put("city", object.getCity());
+			local.put("state", object.getState());
+			local.put("description", object.getDescription());
+			local.put("creatAt", object.getCreateAt());
+			local.put("average", average);
+			
+			array.add(local);
 		}
 		
 		JSONObject data = new JSONObject();

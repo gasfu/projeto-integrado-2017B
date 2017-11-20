@@ -80,4 +80,27 @@ public class UsersRepository {
 		return user;	
 	}
 	
+	public User findOneById(String id) {
+		String query = "SELECT * FROM users WHERE id = ?"; 
+		User user = null;
+		
+		try{
+			Connection connection = ConnectionFactory.getConnection();
+			PreparedStatement stmt;
+			
+			stmt = connection.prepareStatement(query);
+			stmt.setString(1, id);
+
+			ResultSet result = stmt.executeQuery();
+			
+			if(result.next())
+				user = new User(result.getString("id"), result.getString("name"), result.getString("email"), result.getString("password"));			
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;	
+	}
+	
 }

@@ -26,5 +26,15 @@ public class LocalsService {
 		LocalsRepository repository = new LocalsRepository();
 		return repository.search(name);
 	}
+	
+	public ArrayList<Local> getLocalsByUserId(String userId) {
+		LocalsRepository repository = new LocalsRepository();
+		return repository.getLocalsByUserId(userId);
+	}
+	
+	public String delete(String id) {
+		LocalsRepository repository = new LocalsRepository();
+		return repository.delete(id);
+	}
 
 }

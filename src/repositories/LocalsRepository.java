@@ -7,13 +7,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import factories.ConnectionFactory;
+import models.Category;
 import models.Local;
 import models.User;
 
 public class LocalsRepository {
 	
 	public Local create(Local local) {
-		String query = "INSERT INTO locals (id, user_id, name, address, zipcode, lat, lng, neighbourhood, city, state, number, description) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String query = "INSERT INTO locals (id, user_id, name, address, zipcode, lat, lng, neighbourhood, city, state, number, description, category_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try{
 			Connection connection = ConnectionFactory.getConnection();
@@ -32,6 +33,7 @@ public class LocalsRepository {
 			stmt.setString(10, local.getState());
 			stmt.setString(11, local.getNumber());
 			stmt.setString(12, local.getDescription());
+			stmt.setString(13, local.getCategory().getId());
 			
 			stmt.execute();
 			
@@ -43,7 +45,7 @@ public class LocalsRepository {
 	}
 	
 	public ArrayList<Local> fetch() {
-		String query = "SELECT * FROM locals";
+		String query = "SELECT * FROM locals LEFT JOIN categories ON locals.category_id = categories.id";
 		ArrayList<Local> locals = new ArrayList<Local>();
 		
 		try{
@@ -54,6 +56,10 @@ public class LocalsRepository {
 			ResultSet result = stmt.executeQuery();
 			
 			while(result.next()) {
+				Category category = new Category();
+				category.setId(result.getString("categories.id"));
+				category.setLabel(result.getString("categories.label"));
+				
 				Local local = new Local();
 				local.setId(result.getString(1));
 				local.setName(result.getString(3));
@@ -64,6 +70,7 @@ public class LocalsRepository {
 				local.setCity(result.getString(8));
 				local.setLat(result.getString(11));
 				local.setLng(result.getString(12));
+				local.setCategory(category);
 				locals.add(local);
 			}
 				
@@ -76,7 +83,7 @@ public class LocalsRepository {
 	}
 	
 	public ArrayList<Local> search(String name) {
-		String query = "SELECT * FROM locals WHERE name LIKE ?";
+		String query = "SELECT * FROM locals LEFT JOIN categories ON locals.category_id = categories.id WHERE name LIKE ?";
 		ArrayList<Local> locals = new ArrayList<Local>();
 		
 		try{
@@ -88,6 +95,10 @@ public class LocalsRepository {
 			ResultSet result = stmt.executeQuery();
 			
 			while(result.next()) {
+				Category category = new Category();
+				category.setId(result.getString("categories.id"));
+				category.setLabel(result.getString("categories.label"));
+				
 				Local local = new Local();
 				local.setId(result.getString(1));
 				local.setName(result.getString(3));
@@ -98,6 +109,7 @@ public class LocalsRepository {
 				local.setCity(result.getString(8));
 				local.setLat(result.getString(11));
 				local.setLng(result.getString(12));
+				local.setCategory(category);
 				locals.add(local);
 			}
 				
@@ -110,7 +122,7 @@ public class LocalsRepository {
 	}
 	
 	public Local getLocalById(String id) {
-		String query = "SELECT * FROM locals INNER JOIN users ON locals.user_id = users.id WHERE locals.id = ?";
+		String query = "SELECT * FROM locals INNER JOIN users ON locals.user_id = users.id LEFT JOIN categories ON locals.category_id = categories.id WHERE locals.id = ?";
 		Local local = null;
 		
 		try{
@@ -122,6 +134,10 @@ public class LocalsRepository {
 			ResultSet result = stmt.executeQuery();
 			
 			if(result.next()) {
+				Category category = new Category();
+				category.setId(result.getString("categories.id"));
+				category.setLabel(result.getString("categories.label"));
+				
 				User user = new User();
 				user.setEmail(result.getString("users.email"));
 				user.setId(result.getString("users.id"));
@@ -140,6 +156,7 @@ public class LocalsRepository {
 				local.setCreateAt(result.getString("locals.create_at"));
 				local.setName(result.getString("locals.name"));
 				local.setDescription(result.getString("description"));
+				local.setCategory(category);
 				local.setUser(user);
 			}
 			
@@ -149,6 +166,63 @@ public class LocalsRepository {
 		}
 		
 		return local;
+	}
+	
+	public ArrayList<Local> getLocalsByUserId(String id) {
+		String query = "SELECT * FROM locals LEFT JOIN categories ON locals.category_id = categories.id WHERE user_id = ?";
+		ArrayList<Local> locals = new ArrayList<Local>();
+		
+		try{
+			Connection connection = ConnectionFactory.getConnection();
+			PreparedStatement stmt;
+			
+			stmt = connection.prepareStatement(query);
+			stmt.setString(1, id);
+			ResultSet result = stmt.executeQuery();
+			
+			while(result.next()) {
+				Category category = new Category();
+				category.setId(result.getString("categories.id"));
+				category.setLabel(result.getString("categories.label"));
+				
+				Local local = new Local();
+				local.setId(result.getString(1));
+				local.setName(result.getString(3));
+				local.setAddress(result.getString(4));
+				local.setDescription(result.getString(5));
+				local.setZipcode(result.getString(6));
+				local.setState(result.getString(7));
+				local.setCity(result.getString(8));
+				local.setLat(result.getString(11));
+				local.setLng(result.getString(12));
+				local.setCategory(category);
+				locals.add(local);
+			}
+				
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return locals;
+	}
+	
+	public String delete(String id) {
+		String query = "DELETE FROM locals WHERE id = ?";
+		
+		try{
+			Connection connection = ConnectionFactory.getConnection();
+			PreparedStatement stmt;
+			
+			stmt = connection.prepareStatement(query);
+			stmt.setString(1, id);
+			stmt.execute();
+			
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return id;
 	}
 	
 }

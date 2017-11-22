@@ -9,6 +9,7 @@
 	<nav class="navigation">
 		<a class="link ${param.active == 'show' ? "-active" : ""}"" href="/acesse/locais">locais</a>
 		<a class="link ${param.active == 'registerLocal' ? "-active" : ""}" href="/acesse/local/novo">+ novo local</a>
+		<a class="link ${param.active == 'myLocals' ? "-active" : ""}" href="/acesse/me/locais">meus locais</a>
 		<a class="link" href="/acesse">sair</a>
 	</nav>
 </header>

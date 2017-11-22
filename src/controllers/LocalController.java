@@ -41,6 +41,10 @@ public class LocalController  extends HttpServlet {
 		user.put("email", local.getUser().getEmail());
 		user.put("name", local.getUser().getName());
 		
+		JSONObject category= new JSONObject();
+		category.put("id", local.getCategory().getId());
+		category.put("label", local.getCategory().getLabel());
+		
 		data.put("id", local.getId());
 		data.put("name", local.getName());
 		data.put("zipcode", local.getZipcode());
@@ -54,9 +58,24 @@ public class LocalController  extends HttpServlet {
 		data.put("description", local.getDescription());
 		data.put("create_at", local.getCreateAt());
 		data.put("user", user);
-
+		data.put("category", category);
+	
 		response.setContentType("application/json");
         response.getWriter().write(data.toString());
 	}
 	
+	@Override
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		JSONObject data = new JSONObject();
+		String id = request.getParameter("id");
+		LocalsService service = new LocalsService();
+		
+		String localId = service.delete(id);
+		
+		data.put("status", 200);
+		data.put("id", localId);
+		
+		response.setContentType("application/json");
+        response.getWriter().write(data.toString());
+	}
 }

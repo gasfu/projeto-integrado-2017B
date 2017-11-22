@@ -51,7 +51,7 @@ public class SearchController extends HttpServlet {
 			int count = 0;
 			
 			while(evaluationsList.hasNext()) {
-				average += Double.parseDouble(evaluationsList.next().getValue());
+				average += evaluationsList.next().getAverage();
 				count++;
 			}
 			

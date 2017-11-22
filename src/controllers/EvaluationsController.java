@@ -31,13 +31,19 @@ public class EvaluationsController extends HttpServlet{
 		
 		String localId = request.getParameter("local_id");
 		String comment = request.getParameter("comment");
-		String value = request.getParameter("value");
+		String wheelchairAccessValue = request.getParameter("wheelchair_access_value");
+		String wheelchairWcValue = request.getParameter("wheelchair_wc_value");
+		String tatilFloorValue = request.getParameter("tatil_floor_value");
+		String braileValue = request.getParameter("braile_value");
 		User user = (User) session.getAttribute("auth");
 		
 		Evaluation evaluation = new Evaluation();
 		evaluation.setId(evaluation.generateId());
 		evaluation.setLocalId(localId);
-		evaluation.setValue(value);
+		evaluation.setWheelchairAccessValue(wheelchairAccessValue);
+		evaluation.setWheelchairWcValue(wheelchairWcValue);
+		evaluation.setTatilFloorValue(tatilFloorValue);
+		evaluation.setBraileValue(braileValue);
 		evaluation.setUser(user);
 		evaluation.setComment(comment);
 		

@@ -14,6 +14,7 @@ public class Local {
 	private String state; 
 	private String zipcode;
 	private User user;
+	private Category category;
 	private String description;
 	private String createAt;
 	private String lat;
@@ -152,5 +153,13 @@ public class Local {
 
 	public void setLat(String lat) {
 		this.lat = lat;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 }

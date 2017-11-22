@@ -16,28 +16,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 
-import models.Category;
 import models.Evaluation;
 import models.Local;
 import models.User;
 import services.EvaluationService;
 import services.LocalsService;
 
-@WebServlet("/locals")
-public class LocalsController extends HttpServlet {
-	
-	public LocalsController() {
-		super();
-	}
+@WebServlet("/user/locals")
+public class UserLocalsController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		response.setContentType("text/html; charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		String userId = request.getParameter("user_id"); 
+		System.out.println(userId);
 		
 		LocalsService service = new LocalsService();
-		ArrayList<Local> locals = service.fetch();
+		ArrayList<Local> locals = service.getLocalsByUserId(userId);
 		
 		Iterator<Local> list = locals.iterator();
 		
@@ -79,41 +75,6 @@ public class LocalsController extends HttpServlet {
 		JSONObject data = new JSONObject();
 		
 		data.put("locals", array);
-		data.put("status", 200);
-		
-		response.setContentType("application/json");
-        response.getWriter().write(data.toString());
-	}
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		HttpSession session = request.getSession(true); 
-		
-		String name = request.getParameter("name");
-		String description = request.getParameter("description");
-		String address = request.getParameter("address");
-		String number = request.getParameter("number");
-		String city = request.getParameter("city");
-		String neighbourhood = request.getParameter("neighbourhood");
-		String state = request.getParameter("state");
-		String zipcode = request.getParameter("zipcode");
-		String lat = request.getParameter("lat");
-		String lng = request.getParameter("lng");
-		String categoryId = request.getParameter("category");
-		
-		User user = (User) session.getAttribute("auth");
-		Category category = new Category();
-		category.setId(categoryId);
-		
-		Local local = new Local(user, name, description, address, number, city, neighbourhood, state, zipcode, lat, lng);
-		local.setCategory(category);
-		LocalsService service = new LocalsService();
-		service.create(local);
-		
-		JSONObject data = new JSONObject();
-		
-		data.put("id", local.getId());
 		data.put("status", 200);
 		
 		response.setContentType("application/json");

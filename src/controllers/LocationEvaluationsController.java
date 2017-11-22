@@ -48,7 +48,11 @@ public class LocationEvaluationsController  extends HttpServlet {
 			
 			data.put("id", object.getId());
 			data.put("comment", object.getComment());
-			data.put("value", object.getValue());
+			data.put("value", object.getAverage());
+			data.put("wheelchair_access_value", object.getWheelchairAccessValue());
+			data.put("wheelchair_wc_value", object.getWheelchairWcValue());
+			data.put("braile_value", object.getBraileValue());
+			data.put("tatil_floor_value", object.getTatilFloorValue());
 			data.put("create_at", object.getCreateAt());
 			data.put("user", user);
 			

@@ -14,7 +14,7 @@ import models.User;
 public class EvaluationsRepository {
 	
 	public Evaluation create(Evaluation evaluation) {
-		String query = "INSERT INTO evaluations (id, user_id, local_id, value, comment) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO evaluations (id, user_id, local_id, comment, wheelchair_access_value, wheelchair_wc_value, tatil_floor_value, braile_value) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try{
 			Connection connection = ConnectionFactory.getConnection();
@@ -24,8 +24,11 @@ public class EvaluationsRepository {
 			stmt.setString(1, evaluation.getId());
 			stmt.setString(2, evaluation.getUser().getId());
 			stmt.setString(3, evaluation.getLocalId());
-			stmt.setString(4, evaluation.getValue());
-			stmt.setString(5, evaluation.getComment());
+			stmt.setString(4, evaluation.getComment());
+			stmt.setString(5, evaluation.getWheelchairAccessValue());
+			stmt.setString(6, evaluation.getWheelchairWcValue());
+			stmt.setString(7, evaluation.getTatilFloorValue());
+			stmt.setString(8, evaluation.getBraileValue());
 			
 			stmt.execute();
 			
@@ -59,7 +62,10 @@ public class EvaluationsRepository {
 				evaluation.setId(result.getString("evaluations.id"));
 				evaluation.setLocalId(result.getString("evaluations.local_id"));
 				evaluation.setComment(result.getString("evaluations.comment"));
-				evaluation.setValue(result.getString("evaluations.value"));
+				evaluation.setWheelchairAccessValue(result.getString("evaluations.wheelchair_access_value"));
+				evaluation.setWheelchairWcValue(result.getString("evaluations.wheelchair_wc_value"));
+				evaluation.setTatilFloorValue(result.getString("evaluations.tatil_floor_value"));
+				evaluation.setBraileValue(result.getString("evaluations.braile_value"));
 				evaluation.setCreateAt(result.getString("evaluations.create_at"));
 				evaluation.setUser(user);
 				

@@ -4,7 +4,10 @@ public class Evaluation {
 	private User user;
 	private String localId;
 	private String id;
-	private String value;
+	private String wheelchairAccessValue;
+	private String wheelchairWcValue;
+	private String braileValue;
+	private String tatilFloorValue;
 	private String createAt;
 	private String comment;
 	
@@ -22,6 +25,11 @@ public class Evaluation {
 		}
 		
 		return string;
+	}
+	
+	public Double getAverage() {
+		double avg = (Integer.parseInt(this.getBraileValue()) + Integer.parseInt(this.getTatilFloorValue()) + Integer.parseInt(this.getWheelchairAccessValue()) + Integer.parseInt(this.getWheelchairWcValue()))/4;
+		return avg;
 	}
 
 	public User getUser() {
@@ -48,14 +56,6 @@ public class Evaluation {
 		this.id = id;
 	}
 
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 	public String getCreateAt() {
 		return createAt;
 	}
@@ -70,5 +70,37 @@ public class Evaluation {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getWheelchairAccessValue() {
+		return wheelchairAccessValue;
+	}
+
+	public void setWheelchairAccessValue(String wheelchairAccessValue) {
+		this.wheelchairAccessValue = wheelchairAccessValue;
+	}
+
+	public String getWheelchairWcValue() {
+		return wheelchairWcValue;
+	}
+
+	public void setWheelchairWcValue(String wheelchairWcValue) {
+		this.wheelchairWcValue = wheelchairWcValue;
+	}
+
+	public String getBraileValue() {
+		return braileValue;
+	}
+
+	public void setBraileValue(String braileValue) {
+		this.braileValue = braileValue;
+	}
+
+	public String getTatilFloorValue() {
+		return tatilFloorValue;
+	}
+
+	public void setTatilFloorValue(String tatilFloorValue) {
+		this.tatilFloorValue = tatilFloorValue;
 	}
 }

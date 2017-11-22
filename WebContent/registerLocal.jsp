@@ -23,8 +23,8 @@
 		<input type="hidden" name="LNG" />
 		<div class="row">
 			<input class="input -x50" type="text" placeholder="nome" name="NAME" />
-			<select class="select -x50" placeholder="categoria" name="CATEGORY">
-				<option value="">Selecione uma categoria</option>
+			<select class="select -x50" placeholder="categoria" name="CATEGORY" app-categories-list>
+				<option value="" selected >Selecione uma categoria</option>
 			</select>
 		</div>
 		<textarea class="text-area" type="text" placeholder="descrição" name="DESCRIPTION"></textarea>

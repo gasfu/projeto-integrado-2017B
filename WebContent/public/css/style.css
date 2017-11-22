@@ -309,6 +309,7 @@
 	text-align: center;
 	display: inline-flex;
 	align-items: center;
+	flex-wrap: wrap;
 }
 
 .stars > .star {
@@ -365,7 +366,7 @@
 
 .form.evalue > .stars > input[type="radio"]:checked + .star::after {
 	background-color: var(--pink-color);
-}
+} 
 
 .stars > .interior {
 	background-color: var(--blue-color);
@@ -380,11 +381,22 @@
 .form.evalue > .stars > .interior {
 	background-color: var(--pink-color);
 }
+
 .stars > .interior::after {
 	top: 2px;
 	left: 2px;
 	right: 2px;
 	bottom: 2px;	
+}
+
+.form.evalue > .stars > .label {
+	display: block;
+	width: 100%;
+	text-align: left;
+	margin-bottom: 5px;
+	font-size: .9em;
+	font-weight: 700;
+	color: var(--pink-color);
 }
 
 .alert {
@@ -634,6 +646,36 @@
 
 .modal-wrapper > .modal > .description > .about {
 	color: var(--gray-color);
+	margin-bottom: 30px;
+}
+
+.modal-wrapper > .modal > .description > .evaluations {
+	padding: 30px;
+	display: inline-flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.modal-wrapper > .modal > .description > .evaluations > .stars {
+	flex-wrap: wrap;
+	width: 50%;
+	justify-content: center;
+	margin-bottom: 25px;
+}
+
+.modal-wrapper > .modal > .description > .evaluations > .stars > .label {
+	display: block;
+	width: 100%;
+	color: var(--blue-color);
+	font-weight: 700;
+	margin-bottom: 5px;
+	font-size: .9em;
+	text-transform: uppercase;
+}
+
+.modal-wrapper > .modal > .description > .evaluations > .stars > .star {
+	weight: 25px;
+	height: 25px;
 }
 
 .modal-wrapper > .modal > .description > .options > .item {
@@ -675,7 +717,7 @@
 	margin-top: 30px;	
 	width: 100%;
 	max-width: 600px;
-	height: 330px;
+	height: 542px;
 	padding: 15px;
 	border: solid 1px var(--light-gray-color);
 	position: relative;
@@ -719,17 +761,18 @@
 	border-bottom: solid 1px var(--light-gray-color);
 	border-radius: 4px; 
 	margin-bottom: 25px;
+	margin-top: 30px;
 	transition-duration: .4s;
 	resize: none;
 }
 
 .modal-wrapper > .modal > .evaluations > .form > .stars {
-	padding: 20px 0;	
+	margin-top: 20px	
 }
 
 .modal-wrapper > .modal > .evaluations > .form > .stars > .star {
-	width: 30px;
-	height: 30px;
+	width: 22px;
+	height: 22px;
 }
 
 .modal-wrapper > .modal > .evaluations > .form > .stars > input[type="radio"] {
@@ -823,6 +866,110 @@
 	border-bottom: solid .5px #E4E4E4;
 }
 
+/* ===== MY LOCALS ===== */
+.my-locals {
+	width: 100%;
+	padding: 60px 0; 
+	max-width: 768px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 65px;
+	min-height: calc(100vh - 65px);
+}
+
+.my-locals > .list {
+	width: 100%;
+}
+
+.my-locals > .title {
+	text-align: center;
+	font-size: 1.8em;
+	margin-bottom: 45px;
+}
+
+.my-locals > .list > .my-local-card {
+	box-shadow: 0px 0px 1px 1px rgba(0,0,0,.1);
+	cursor: pointer;
+	margin-left: 5px;
+	margin-right: 5px;
+	background: #F6F6F6;
+	height: 130px;
+	width: 100%;
+}
+
+.my-locals > .list > .my-local-card + .my-local-card {
+	margin-top: 15px;
+}
+
+.my-locals > .list > .my-local-card > .map {
+	display: inline-block;
+	width: 160px;
+	height: 100%;
+	box-shadow: 1px 0px 1px 0px rgba(0,0,0,.1);
+}
+
+.my-locals > .list > .my-local-card > .description {
+	display: inline-block;
+	width: calc(100% - 160px);
+	height: 100%;
+	vertical-align: top;
+	padding: 15px;
+}
+
+.my-locals > .list > .my-local-card > .description > .header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.my-locals > .list > .my-local-card > .description > .header > .title {
+	font-weight: 700;
+	font-size: 1em;
+	display: flex;
+	align-items: center;
+}
+
+.my-locals > .list > .my-local-card > .description > .header > .title > .city {
+	font-weight: 400;
+	font-size: .8em;
+	margin-left: 2px;
+	color: var(--gray-color);
+}
+
+.my-locals > .list > .my-local-card > .description > .header > .stars > .star {
+	width: 18px;
+	height: 18px;
+}
+
+.my-locals > .list > .my-local-card > .description > .main {
+	padding: 15px 0;
+}
+
+.my-locals > .list > .my-local-card > .description > .main > p.text {
+	font-size: .8em;
+	height: 36px;
+	color: var(--gray-color);
+}
+
+.my-locals > .list > .my-local-card > .description > .main > .actions {
+	padding: 15px 0;
+}
+
+.my-locals > .list > .my-local-card > .description > .main > .actions > button,
+.my-locals > .list > .my-local-card > .description > .main > .actions > button:focus,
+.my-locals > .list > .my-local-card > .description > .main > .actions > button:hover {
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.my-locals > .list > .my-local-card > .description > .main > .actions > button + button {
+	margin-left: 5px;	
+}
+
+.my-locals > .list > .my-local-card > .description > .main > .actions > button > img {
+	width: 18px;
+}
+
 @keyframes down {
 	from {
 		transform: translateY(-1024px);
@@ -833,6 +980,29 @@
 	}
 }
 
+.footer {
+	width: 100%;
+	padding: 40px;
+	font-weight: 700;
+	color: var(--gray-color);
+	text-align: center;
+	font-size: .8em;
+}
+
+.footer > a {
+	color: var(--pink-color);
+}
+
+.footer > a > .icon {
+	width: 20px;
+	vertical-align: middle;
+	margin-left: 5px;
+}
+
 .-hide {
 	display: none !important;
+}
+
+.-nooverflow {
+	overflow: hidden !important;
 }

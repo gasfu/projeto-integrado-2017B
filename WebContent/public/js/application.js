@@ -16,6 +16,9 @@ if(searchInput) searchInput.onkeyup = searchAction;
 const zipcodeInput = document.querySelector("[get-location-action]");
 if(zipcodeInput) zipcodeInput.onblur = getLocationAction;
 
+const categoryList = document.querySelector("[app-categories-list]");
+if(categoryList) setCategories(categoryList);
+
 window.onload = () => {
 	getSession();
 };
@@ -42,7 +45,7 @@ function authorizeAction(e) {
 	axios.post("/acesse/authorize", mapToApi(data)).then((response) => {
 		if(response.data.status != 200) return e.target.classList.add("-error");
 		window.localStorage.setItem("user_id", response.data.user_id);
-		document.location.href = "/acesse/visualizar";
+		document.location.href = "/acesse/locais";
 	});
 }
 
@@ -70,7 +73,7 @@ function registerAction(e) {
 	const data = { name, email, password };
 	
 	axios.post("/acesse/cadastrar", mapToApi(data)).then((response) => {
-		if(response.data.status == 200) document.location.href = "/acesse/visualizar";
+		if(response.data.status == 200) document.location.href = "/acesse/locais";
 	});
 }
 
@@ -87,7 +90,7 @@ function registerLocalAction(e) {
 	const neighbourhood = e.target.NEIGHBOURHOOD.value;
 	const city = e.target.CITY.value;
 	const state = e.target.STATE.value;
-	const category = e.target.CATEGORY.value;
+	const category = e.target.CATEGORY.value ? e.target.CATEGORY.value : null;
 	const number = e.target.NUMBER.value;
 	const lat = e.target.LAT.value;
 	const lng = e.target.LNG.value;
@@ -158,16 +161,21 @@ function initialSearch() {
 		
 		if(!response.data.locals.length) html = "Nenhum local cadastrado :(";
 		else {
-			html = response.data.locals.map(local => { 
+			html = response.data.locals.sort(evaluationOrder).map(local => { 
 				const { name, city, state, id, lat, lng, average } = local;
 				return parseLocals({ name, city, state, id, lat, lng, average});
 			}).join("");
 		}
 		
-		document.querySelector("[app-local-list]").innerHTML = html;
+		const localList = document.querySelector("[app-local-list]");
+		if(localList) localList.innerHTML = html;
 		loadMaps();
 	});
 };
+
+function evaluationOrder(x, y) {
+	return x.average == y.average ? 0 : x.average > y.average ? -1 : 1;  
+}
 
 initialSearch();
 
@@ -180,6 +188,30 @@ function parseLocals({ name, city, state, id, lat, lng, average }) {
 			html += `<h3 class="title">${name}</h3>`;
 			html += `<h3 class="city">${city}, ${state}</h3>`;
 			html += getStars(average);
+		html += '</div>';
+	html += '</div>';
+	return html;
+}
+
+function parseMyLocals({ name, city, state, id, lat, lng, average, description }) {
+	let html = "";
+	html += '<div class="my-local-card">';
+		html +=	`<div class="map" id=${id} google-map data-lat=${lat} data-lng=${lng}>`;
+		html += '</div>';
+		html += `<div class="description" id=${id} onClick="showLocationInfo(this)">`;
+			html += "<header class='header'>";
+				html += `<h3 class="title">${name}`;
+				html += `<span class="city">- ${city}, ${state}</span>`;
+				html += "</h3>";
+				html += getStars(average);
+			html += "</header>"
+			html += "<main class='main'>";
+				html += `<p class="text">${description.length >= 100 ? description.slice(0, 100) +"..." : description}</p>`
+				html += "<div class='actions'>";
+					html += `<button onClick="deleteLocal(this)" id=${id}><img src="/acesse/public/icons/trash.svg"</button>`;
+					html += `<button><img src="/acesse/public/icons/edit.svg"</button>`;
+				html += "</div>";
+			html += "</main>";
 		html += '</div>';
 	html += '</div>';
 	return html;
@@ -224,7 +256,7 @@ function searchAction(e) {
 		
 		if(!response.data.locals.length) html = "Nenhum local encontrado :(";
 		else {
-			html = response.data.locals.map(local => { 
+			html = response.data.locals.sort(evaluationOrder).map(local => { 
 				const { name, city, state, id, lat, lng, average } = local;
 				return parseLocals({ name, city, state, id, lat, lng, average });
 			}).join("");
@@ -292,10 +324,10 @@ function getCoordsAction(e) {
 }
 
 const LOCATION_MODAL_WRAPPER = document.querySelector("[app-location-info]");
-LOCATION_MODAL_WRAPPER.onclick = hideLocationInfo;
+if(LOCATION_MODAL_WRAPPER) LOCATION_MODAL_WRAPPER.onclick = hideLocationInfo;
 
 const LOCATION_MODAL = document.querySelector("[app-location-info] > .modal");
-LOCATION_MODAL.onclick = function(e) {
+if(LOCATION_MODAL) LOCATION_MODAL.onclick = function(e) {
 	e.stopPropagation();
 };
 
@@ -306,6 +338,9 @@ function hideLocationInfo() {
 	const evaluationList = document.querySelector("[app-evaluation-list]");
 	evaluationList.classList.add("-loading");
 	evaluationList.innerHTML = "<img src='/acesse/public/icons/rolling.svg' />";
+	
+	const body = document.querySelector("body");
+	body.classList.remove("-nooverflow");
 	
 }
 
@@ -333,11 +368,36 @@ function showLocationInfo(element) {
 		const viewLocalId = document.querySelector("[info-local-id]");
 		viewLocalId.value = response.data.id;
 		
+		const viewLocalCategory = document.querySelector("[info-local-category]");
+		viewLocalCategory.innerHTML = response.data.category.id ? response.data.category.label : "Indefinido";
+		
+		const viewLocalCity = document.querySelector("[info-local-city]");
+		viewLocalCity.innerHTML = `${response.data.city}, ${response.data.state}`;
+		
 		LOCATION_MODAL_WRAPPER.classList.remove("hide");
+		
+		const body = document.querySelector("body");
+		body.classList.add("-nooverflow");
+		
 		google.maps.event.trigger(googleMap, 'resize');
 		
 		fetchEvaluations(response.data.id);
 	});	
+}
+
+function getStarsWithLabel(value = 0, label, show = true) {
+	const stars = getStarsValue(value);
+	let html = "";
+	html += '<div class="stars">';
+		html += `<span class="label">${label}</span>`;
+		html += `<span class="star interior _${stars[0]}"></span>`;
+		html += `<span class="star interior _${stars[1]}"></span>`;
+		html += `<span class="star interior _${stars[2]}"></span>`;
+		html += `<span class="star interior _${stars[3]}"></span>`;
+		html += `<span class="star interior _${stars[4]}"></span>`;
+		html += `<span class="value ${show ? "" : "-hide"}">${value.toFixed(1)}</span>`;
+	html += '</div>';
+	return html;
 }
 
 function fetchEvaluations(id) {
@@ -347,24 +407,46 @@ function fetchEvaluations(id) {
 	formEvaluation.classList.remove("-hide");
 	formEvaluation.classList.remove("-sent");
 	
-	setTimeout(() => {
-		axios.get("/acesse/local/evaluations?local_id=" + id).then(response => {
-			let evaluations = response.data.evaluations;
-			let html;
+	axios.get("/acesse/local/evaluations?local_id=" + id).then(response => {
+		let evaluations = response.data.evaluations;
+		let html;
+		const viewLocalEvaluations = document.querySelector("[info-local-evaluations]");
+		
+		if(!evaluations.length) {
+			html = "<span>Seja o primeiro a avaliar esse local.</span>";
 			
-			if(!evaluations.length) html = "<span>Seja o primeiro a avaliar esse local.</span>";
-			else {
-				const userId = window.localStorage.getItem("user_id");
-				if(evaluations.length && evaluations.findIndex(evaluation => evaluation.user.id == userId) != -1)
-					formEvaluation.classList.add("-hide");
-					
-				html = evaluations.map(evaluation => getEvaluationCardHTML(evaluation)).join();
-			}
+			let evaluations = getStarsWithLabel(0, "Acesso p/ Cadeirantes");
+			evaluations += getStarsWithLabel(0, "Sanitário p/ Cadeirantes");
+			evaluations += getStarsWithLabel(0, "Instruções Braile<");
+			evaluations += getStarsWithLabel(0, "Piso Tátil");
+			viewLocalEvaluations.innerHTML = evaluations;
+		} 
 			
+		else {
+			const userId = window.localStorage.getItem("user_id");
+			if(evaluations.length && evaluations.findIndex(evaluation => evaluation.user.id == userId) != -1)
+				formEvaluation.classList.add("-hide");
+			
+			const wheelchairAccessAvg = evaluations.map(evaluation => evaluation.wheelchair_access_value).reduce((a, b) => parseInt(a) + parseInt(b)) / evaluations.length;	
+			const wheelchairWcAvg = evaluations.map(evaluation => evaluation.wheelchair_wc_value).reduce((a, b) => +a + +b) / evaluations.length;
+			const braileAvg = evaluations.map(evaluation => evaluation.braile_value).reduce((a, b) => +a + +b) / evaluations.length;
+			const tatilFloorAvg = evaluations.map(evaluation => evaluation.tatil_floor_value).reduce((a, b) => +a + +b) / evaluations.length;
+			
+			let evaluationsHTML = getStarsWithLabel(wheelchairAccessAvg, "Acesso p/ Cadeirantes");
+			evaluationsHTML += getStarsWithLabel(wheelchairWcAvg, "Sanitário p/ Cadeirantes");
+			evaluationsHTML += getStarsWithLabel(braileAvg, "Instruções Braile<");
+			evaluationsHTML += getStarsWithLabel(tatilFloorAvg, "Piso Tátil");
+			viewLocalEvaluations.innerHTML = evaluationsHTML;
+			
+			html = evaluations.map(evaluation => getEvaluationCardHTML(evaluation)).join();
+		}		
+		
+		setTimeout(() => {
 			evaluationList.classList.remove("-loading");				
 			evaluationList.innerHTML = html;	
-		});
-	}, 1000);
+		}, 1000);
+		
+	});
 }
 
 function getEvaluationCardHTML(evaluation) {
@@ -394,15 +476,50 @@ function formEvaluationAction(e) {
 	e.target.classList.add("-sent");
 	
 	const data = {
-		value: e.target.VALUE.value,
+		wheelchair_access_value: e.target.WHEELCHAIR_ACCESS_VALUE.value,
+		wheelchair_wc_value: e.target.WHEELCHAIR_WC_VALUE.value,
+		tatil_floor_value: e.target.TATIL_FLOOR_VALUE.value,
+		braile_value: e.target.BRAILE_VALUE.value,
 		comment: e.target.COMMENT.value,
 		local_id: e.target.LOCAL_ID.value
 	};
-	
-	console.log(data.value);
 	
 	axios.post("/acesse/evaluations", mapToApi(data)).then((response) => {
 		console.log("in create evaluation", response);
 	});
 }
 
+const USER_LOCALS_LIST = document.querySelector("[app-user-locals-list]");
+fetchUserLocals()
+
+function fetchUserLocals() {
+	const user_id = window.localStorage.getItem("user_id");
+	if(!user_id) return;
+	axios.get("/acesse/user/locals?user_id="+ user_id).then(response => {
+		let html;
+		
+		if(!response.data.locals.length) html = "Nenhum local cadastrado :(";
+		else {
+			html = response.data.locals.sort(evaluationOrder).map(local => { 
+				const { name, city, state, id, lat, lng, average, create_at, description } = local;
+				return parseMyLocals({ name, city, state, id, lat, lng, average, create_at, description });
+			}).join("");
+		}
+		
+		if(USER_LOCALS_LIST) USER_LOCALS_LIST.innerHTML = html;
+		loadMaps();
+	});
+}
+
+function deleteLocal(element) {
+	axios.delete("/acesse/local?id="+element.id).then(response => {
+		location.reload();
+	});
+}
+
+function setCategories(element) {
+	axios.get("/acesse/categories").then(response => {
+		const html = response.data.categories.map(category => `<option value="${category.id}">${category.label}</option>`).join("");
+		element.innerHTML = html + element.innerHTML;
+	});
+}
